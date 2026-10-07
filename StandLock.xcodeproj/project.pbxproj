@@ -21,12 +21,15 @@
 		2CD0D3C3CF795626E50A5EAA /* StandLockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1524D749BB78A875E5FD51F /* StandLockApp.swift */; };
 		44D9EB3E27CF114DDF7E3735 /* BreakOverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BBDBF97CFAA5FF490CBD00 /* BreakOverlayWindow.swift */; };
 		45EEC3830A30A1175EBD1FCE /* ThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8180C020203FB970C798C84E /* ThemeStore.swift */; };
+		A2025E57087F0A551F05ABE1 /* FixedTimeBreakStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF55EE317C5E5C19C69466F /* FixedTimeBreakStore.swift */; };
 		4A537C55B992DF62814F9857 /* QuickActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2436E0F3F20FE12F920ADE7 /* QuickActionsView.swift */; };
 		4F9FCDEAA10641DE215D0663 /* StandLockCore in Frameworks */ = {isa = PBXBuildFile; productRef = 72A6FAE1CB69E8D0DE33B641 /* StandLockCore */; };
 		4FCB9EE133A8300CC965E687 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81F2ED91290AD26CB5B672E /* AppCoordinator.swift */; };
 		51FC83BD2349C694BF8C11DD /* TimerNumerals.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF9C8AFAF33310B45445B2 /* TimerNumerals.swift */; };
 		525A004E07BB31DB91651F08 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CD5052FB7ADFF1C72A819672 /* InfoPlist.xcstrings */; };
 		5AC2660FDBB66F4B523FC1E2 /* ScheduleEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F9B9151DFEA710D1211B70 /* ScheduleEditorView.swift */; };
+		8BF1EBB8796CBE4DBFFF1932 /* FixedTimeBreakFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1239C820030A127A36BEC43A /* FixedTimeBreakFormView.swift */; };
+		71572FAB2502DAA41410E580 /* FixedTimeBreaksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48371579FCD4AFCD61E2069F /* FixedTimeBreaksSection.swift */; };
 		676678D8A09155A2AEEFA18C /* DisciplineLevelPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866831BDFD42E80353C80D8 /* DisciplineLevelPicker.swift */; };
 		6AF974084F51158A71D9EA47 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EB234C46341A2816AAE12 /* SettingsView.swift */; };
 		6F9C00664AAD42633900A642 /* Exercises.json in Resources */ = {isa = PBXBuildFile; fileRef = 2063FDE70AFCC135664A8FD4 /* Exercises.json */; };
@@ -82,9 +85,12 @@
 		7259326030030D8F49258219 /* QuickSetupStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSetupStepView.swift; sourceTree = "<group>"; };
 		7A85E4C082C8E3C5083ABAEB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		8180C020203FB970C798C84E /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
+		6DF55EE317C5E5C19C69466F /* FixedTimeBreakStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeBreakStore.swift; sourceTree = "<group>"; };
 		85C5398AE9D97E6B58618468 /* WordmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordmarkView.swift; sourceTree = "<group>"; };
 		94B7BAAC1837524EF3DD6B90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94F9B9151DFEA710D1211B70 /* ScheduleEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditorView.swift; sourceTree = "<group>"; };
+		1239C820030A127A36BEC43A /* FixedTimeBreakFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeBreakFormView.swift; sourceTree = "<group>"; };
+		48371579FCD4AFCD61E2069F /* FixedTimeBreaksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeBreaksSection.swift; sourceTree = "<group>"; };
 		99BB0E055C4BD25865AD3EE1 /* ManuscriptBreakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManuscriptBreakView.swift; sourceTree = "<group>"; };
 		99FB6FBBABD55844628B8DA3 /* BreakTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakTypography.swift; sourceTree = "<group>"; };
 		9C3B7E68FDF3C989BA50F367 /* BreakPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakPalette.swift; sourceTree = "<group>"; };
@@ -160,6 +166,8 @@
 				05EBBE0E51300DF74842F753 /* GeneralSettingsView.swift */,
 				6382F8157622B1D11845645E /* PermissionsView.swift */,
 				94F9B9151DFEA710D1211B70 /* ScheduleEditorView.swift */,
+				1239C820030A127A36BEC43A /* FixedTimeBreakFormView.swift */,
+				48371579FCD4AFCD61E2069F /* FixedTimeBreaksSection.swift */,
 				14C3EDA84FE380ED1AF6CE8A /* ScheduleFormView.swift */,
 				512EB234C46341A2816AAE12 /* SettingsView.swift */,
 				303422D10B9C319038D63E32 /* SoftwareUpdate.swift */,
@@ -179,6 +187,7 @@
 				4462E8D161113596647BD19E /* OverlayWindowController.swift */,
 				FE0E2C708B760F809144B756 /* PermissionChecker.swift */,
 				8180C020203FB970C798C84E /* ThemeStore.swift */,
+				6DF55EE317C5E5C19C69466F /* FixedTimeBreakStore.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -371,6 +380,8 @@
 				4A537C55B992DF62814F9857 /* QuickActionsView.swift in Sources */,
 				897387E26C50A633291C6545 /* QuickSetupStepView.swift in Sources */,
 				5AC2660FDBB66F4B523FC1E2 /* ScheduleEditorView.swift in Sources */,
+				8BF1EBB8796CBE4DBFFF1932 /* FixedTimeBreakFormView.swift in Sources */,
+				71572FAB2502DAA41410E580 /* FixedTimeBreaksSection.swift in Sources */,
 				B0845F2F14770C95395FBA5F /* ScheduleFormView.swift in Sources */,
 				6AF974084F51158A71D9EA47 /* SettingsView.swift in Sources */,
 				009F1339F2742632532208AA /* SoftwareUpdate.swift in Sources */,
@@ -378,6 +389,7 @@
 				1D8C2A5E77A5D5D5F9C7EFDC /* StatisticsView.swift in Sources */,
 				D588F2EB46E9B8124422C5EE /* StatsFooter.swift in Sources */,
 				45EEC3830A30A1175EBD1FCE /* ThemeStore.swift in Sources */,
+				A2025E57087F0A551F05ABE1 /* FixedTimeBreakStore.swift in Sources */,
 				51FC83BD2349C694BF8C11DD /* TimerNumerals.swift in Sources */,
 				D6924A301B93814466C9327F /* WeekdaySymbols.swift in Sources */,
 				742A80C38BAB206209CC4213 /* WelcomeStepView.swift in Sources */,

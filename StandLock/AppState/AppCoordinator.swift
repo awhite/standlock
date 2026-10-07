@@ -47,6 +47,7 @@ final class AppCoordinator: ObservableObject {
     let languageStore = LanguageStore()
     let themeStore = ThemeStore()
     let permissionChecker: PermissionChecker
+    let fixedTimeBreakStore = FixedTimeBreakStore()
 
     private var coordinator: BreakCoordinator?
     /// Survives the coordinator-less interval between a teardown and the next build.
@@ -99,7 +100,13 @@ final class AppCoordinator: ObservableObject {
                 self?.handleCalendarAuthorizationChange()
             }
         Task { await permissionChecker.pollContinuously() }
-        if !schedules.isEmpty {
+        fixedTimeBreakStore.onChange = { [weak self] in self?.restartCoordinator() }
+        // A running break is left alone; completing it re-arms against the new clock anyway.
+        fixedTimeBreakStore.onClockChange = { [weak self] in
+            guard let self, !self.isBreakActive else { return }
+            self.restartCoordinator()
+        }
+        if !schedules.isEmpty || !fixedTimeBreakStore.breaks.isEmpty {
             startCoordinator()
         }
         if !hasCompletedOnboarding {
@@ -239,7 +246,7 @@ final class AppCoordinator: ObservableObject {
         guard lastStrictModeAvailable != strictAvailable else { return }
         lastStrictModeAvailable = strictAvailable
         if coordinator != nil,
-           schedules.contains(where: { $0.isEnabled && $0.disciplineLevel == .strict }) {
+           (schedules + fixedTimeBreakStore.schedules).contains(where: { $0.isEnabled && $0.disciplineLevel == .strict }) {
             restartCoordinator()
         }
     }
@@ -253,7 +260,7 @@ final class AppCoordinator: ObservableObject {
     /// only Strict installs the event tap, in `OverlayWindowController.showOverlay`.
     private func enforceableSchedules() -> [Schedule] {
         let strictAvailable = permissionChecker.strictModeAvailable
-        return schedules.filter(\.isEnabled).map { schedule in
+        return (schedules + fixedTimeBreakStore.schedules).filter(\.isEnabled).map { schedule in
             guard !strictAvailable, schedule.disciplineLevel == .strict else { return schedule }
             var downgraded = schedule
             downgraded.disciplineLevel = .firm
@@ -301,7 +308,7 @@ final class AppCoordinator: ObservableObject {
 
     private func startCoordinator(restoring state: EnforcementState = EnforcementState()) {
         stopCoordinator()
-        let scheduler = ScheduleEvaluator()
+        let scheduler = FixedTimeSchedulingEngine(base: ScheduleEvaluator(), fixedBreaks: fixedTimeBreakStore.breaks)
         applyCalendarPreferences()
         let detector = CompositeDetector(calendar: calendarDetector)
         let breakCoordinator = BreakCoordinator(
@@ -370,7 +377,7 @@ final class AppCoordinator: ObservableObject {
         // so a rebuild would otherwise re-arm the daily cap from zero and restart the interval
         // cycle -- editing a schedule at noon quietly undid the morning's enforcement.
         if let coordinator {
-            carriedEnforcementState = coordinator.captureEnforcementState()
+            carriedEnforcementState = fixedTimeBreakStore.discardingFixedSlot(from: coordinator.captureEnforcementState())
             carriedEnforcementDay = Date()
         }
         // A pause is a user decision with a deadline, not coordinator bookkeeping. The rebuilt
@@ -382,7 +389,7 @@ final class AppCoordinator: ObservableObject {
         stopCoordinator()
         isPaused = false
         pausedUntil = nil
-        if !schedules.filter(\.isEnabled).isEmpty {
+        if !schedules.filter(\.isEnabled).isEmpty || fixedTimeBreakStore.hasEnabled {
             startCoordinator(restoring: carriedStateForToday())
             if let pauseRemaining, pauseRemaining > 0 {
                 coordinator?.pause(for: pauseRemaining)
@@ -487,7 +494,7 @@ final class AppCoordinator: ObservableObject {
         nextBreakTime = nil
         if let coordinator {
             coordinator.resume()
-        } else if !schedules.filter(\.isEnabled).isEmpty {
+        } else if !schedules.filter(\.isEnabled).isEmpty || fixedTimeBreakStore.hasEnabled {
             startCoordinator(restoring: carriedStateForToday())
         }
     }

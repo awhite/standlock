@@ -18,6 +18,10 @@ struct ScheduleEditorView: View {
 
             Divider()
 
+            FixedTimeBreaksSection(store: coordinator.fixedTimeBreakStore)
+
+            Divider()
+
             HStack {
                 Spacer()
                 Button {
